@@ -4,7 +4,7 @@ import os
 
 st.set_page_config(page_title="Ahmad Assistant", page_icon="🤖")
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY", "ضع الـ Key هنا"))
+client = Groq(api_key=os.environ.get("GROQ_API_KEY", "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"))
 
 # ═══ الشريط الجانبي ═══
 with st.sidebar:
