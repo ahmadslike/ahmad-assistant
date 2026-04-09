@@ -48,6 +48,19 @@ with st.sidebar:
     if "conversation" in st.session_state:
         msg_count = len([m for m in st.session_state.conversation if m["role"] == "user"])
         st.metric("عدد رسائلك", msg_count)
+        
+    if st.session_state.conversation:
+        chat_text = ""
+        for msg in st.session_state.conversation:
+            role = "أنت" if msg["role"] == "user" else "المساعد"
+            chat_text += f"{role}: {msg['content']}\n\n"
+        
+        st.download_button(
+            label="💾 تحميل المحادثة",
+            data=chat_text,
+            file_name="محادثة.txt",
+            mime="text/plain"
+        )
 
 # ═══ تهيئة المحادثة ═══
 if "conversation" not in st.session_state:
