@@ -4,7 +4,7 @@ import os
 
 st.set_page_config(page_title="Ahmad Assistant", page_icon="🤖")
 
-api_key = os.environ.get("GROQ_API_KEY", "")
+api_key = os.environ.get("GROQ_API_KEY", "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")
 if not api_key:
     st.error("لم يتم العثور على API Key")
     st.stop()
