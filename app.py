@@ -1,5 +1,5 @@
 import streamlit as st
-from groq import Groq
+import anthropic
 import os
 
 st.set_page_config(page_title="Ahmad Assistant", page_icon="🤖")
@@ -8,7 +8,7 @@ api_key = os.environ.get("GROQ_API_KEY", "gsk_QZscmM2aDWGhyVGtOpIdWGdyb3FYYCWR1i
 if not api_key:
     st.error("لم يتم العثور على API Key")
     st.stop()
-client = Groq(api_key=api_key.strip())
+client = anthropic.Anthropic(api_key=api_key.strip())
 
 # ═══ الشخصيات ═══
 personalities = {
@@ -95,11 +95,12 @@ if user_input:
     messages = [{"role": "system", "content": system_content}] + st.session_state.conversation
 
     with st.spinner("يفكر..."):
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=messages
-        )
-
-    reply = response.choices[0].message.content
+        response = client.messages.create(
+    model="claude-opus-4-5",
+    max_tokens=1024,
+    messages=[m for m in messages if m["role"] != "system"],
+    system=next((m["content"] for m in messages if m["role"] == "system"), "")
+)
+reply = response.content[0].text
     st.session_state.conversation.append({"role": "assistant", "content": reply})
     st.chat_message("assistant").write(reply)
