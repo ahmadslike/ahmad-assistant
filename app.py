@@ -4,7 +4,7 @@ import os
 
 st.set_page_config(page_title="Ahmad Assistant", page_icon="🤖")
 
-api_key = os.environ.get("GROQ_API_KEY", "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")
+client = anthropic.Anthropic(api_key="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")
 if not api_key:
     st.error("لم يتم العثور على API Key")
     st.stop()
